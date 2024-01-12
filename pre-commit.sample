@@ -1,0 +1,14 @@
+set -e
+
+# ステージングされた変更のあるファイルを抽出
+formatFileList="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.dart/ { print $NF}')"
+
+# 抽出したファイルに対してフォーマットを適用する
+for filePath in $formatFileList
+do
+  dart fix --apply --dry-run
+  echo "git add $filePath"
+  git add "$filePath"
+done;
+
+echo "'dart fix' completed."
