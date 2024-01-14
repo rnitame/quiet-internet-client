@@ -4,3 +4,7 @@ PRE_COMMIT_FILE := $(shell pwd)/.git/hooks/pre-commit
 init:
 	cp pre-commit.sample $(PRE_COMMIT_FILE)
 	chmod 755 $(PRE_COMMIT_FILE)
+
+.PHONY: build
+build:
+	dart run build_runner build --delete-conflicting-outputs
