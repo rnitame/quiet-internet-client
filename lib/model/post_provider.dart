@@ -25,7 +25,7 @@ Future<List<Post>> posts(
     postVisibility: visibility,
   );
 
-  return response.data;
+  return response.data.posts;
 }
 
 @riverpod
@@ -38,5 +38,5 @@ Future<Post> post(
     slug: slug,
   );
 
-  return response.data;
+  return response.data.post;
 }

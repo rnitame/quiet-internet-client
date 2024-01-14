@@ -6,16 +6,28 @@ part of 'post.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PostImpl _$$PostImplFromJson(Map<String, dynamic> json) => _$PostImpl(
-      slug: json['slug'] as String,
-      title: json['title'] as String,
-      bodyCharacterCount: json['bodyCharacterCount'] as int,
-      visibility: $enumDecode(_$PostVisibilityEnumMap, json['visibility']),
-      tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
-      bodyMarkdown: json['bodyMarkdown'] as String?,
-      bodyHtml: json['bodyHtml'] as String?,
+_$PostImpl _$$PostImplFromJson(Map<String, dynamic> json) => $checkedCreate(
+      r'_$PostImpl',
+      json,
+      ($checkedConvert) {
+        final val = _$PostImpl(
+          slug: $checkedConvert('slug', (v) => v as String),
+          title: $checkedConvert('title', (v) => v as String),
+          bodyCharacterCount:
+              $checkedConvert('bodyCharacterCount', (v) => v as int),
+          visibility: $checkedConvert(
+              'visibility', (v) => $enumDecode(_$PostVisibilityEnumMap, v)),
+          tags: $checkedConvert('tags',
+              (v) => (v as List<dynamic>).map((e) => e as String).toList()),
+          createdAt:
+              $checkedConvert('createdAt', (v) => DateTime.parse(v as String)),
+          updatedAt:
+              $checkedConvert('updatedAt', (v) => DateTime.parse(v as String)),
+          bodyMarkdown: $checkedConvert('bodyMarkdown', (v) => v as String?),
+          bodyHtml: $checkedConvert('bodyHtml', (v) => v as String?),
+        );
+        return val;
+      },
     );
 
 Map<String, dynamic> _$$PostImplToJson(_$PostImpl instance) =>
@@ -32,6 +44,6 @@ Map<String, dynamic> _$$PostImplToJson(_$PostImpl instance) =>
     };
 
 const _$PostVisibilityEnumMap = {
-  PostVisibility.myself: 'myself',
-  PostVisibility.anyone: 'anyone',
+  PostVisibility.myself: 'MYSELF',
+  PostVisibility.anyone: 'ANYONE',
 };
