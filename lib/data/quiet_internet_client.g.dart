@@ -21,7 +21,7 @@ class _QuietInternetClient implements QuietInternetClient {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<List<Post>>> getPosts({
+  Future<HttpResponse<PostsResponse>> getPosts({
     required int page,
     required int perPage,
     Sort? sort,
@@ -47,8 +47,8 @@ class _QuietInternetClient implements QuietInternetClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<List<dynamic>>(_setStreamType<HttpResponse<List<Post>>>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<PostsResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -64,21 +64,19 @@ class _QuietInternetClient implements QuietInternetClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
-        .map((dynamic i) => Post.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = PostsResponse.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<Post>> getPost(String slug) async {
+  Future<HttpResponse<PostResponse>> getPost({required String slug}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<HttpResponse<Post>>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<PostResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -94,7 +92,7 @@ class _QuietInternetClient implements QuietInternetClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = Post.fromJson(_result.data!);
+    final value = PostResponse.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
@@ -134,7 +132,7 @@ class _QuietInternetClient implements QuietInternetClient {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dioHash() => r'525069c744da7d444ebcb71301950c7522d1bdd5';
+String _$dioHash() => r'448cae9df9ccaf43db0135b7999ed5772ba4b6a6';
 
 /// See also [dio].
 @ProviderFor(dio)

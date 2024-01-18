@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:quick_internet_client/data/authorization_interceptor.dart';
 import 'package:quick_internet_client/model/direction.dart';
 import 'package:quick_internet_client/model/post_visibility.dart';
+import 'package:quick_internet_client/model/response/post_response.dart';
+import 'package:quick_internet_client/model/response/posts_response.dart';
 import 'package:quick_internet_client/model/sort.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -15,9 +18,9 @@ abstract class QuietInternetClient {
   factory QuietInternetClient(Dio dio, {String baseUrl}) = _QuietInternetClient;
 
   @GET('/v1/posts')
-  Future<HttpResponse<List<Post>>> getPosts({
-    @Query('page') int page,
-    @Query('perPage') int perPage,
+  Future<HttpResponse<PostsResponse>> getPosts({
+    @Query('page') required int page,
+    @Query('perPage') required int perPage,
     @Query('sort') Sort? sort,
     @Query('direction') Direction? direction,
     @Query('visibility') PostVisibility? postVisibility,
@@ -28,16 +31,20 @@ abstract class QuietInternetClient {
   });
 
   @GET('/v1/posts/{slug}')
-  Future<HttpResponse<Post>> getPost({
-    @Path('slug') String slug,
+  Future<HttpResponse<PostResponse>> getPost({
+    @Path('slug') required String slug,
   });
 }
 
 @riverpod
-Dio dio() {
+Dio dio(DioRef ref) {
   final dio = Dio();
-  dio.interceptors.add(AuthorizationInterceptor());
+  final interceptors = [
+    AuthorizationInterceptor(),
+    PrettyDioLogger(),
+  ];
 
+  dio.interceptors.addAll(interceptors);
   return dio;
 }
 

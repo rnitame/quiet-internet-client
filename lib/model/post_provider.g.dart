@@ -6,7 +6,7 @@ part of 'post_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$postsHash() => r'e65db09508200d02491b045acc77ef6947bfc2e5';
+String _$postsHash() => r'1cc09081b4201e1cf6d8a71b55c9435df868e1b5';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -219,7 +219,7 @@ class _PostsProviderElement extends AutoDisposeFutureProviderElement<List<Post>>
   PostVisibility get visibility => (origin as PostsProvider).visibility;
 }
 
-String _$postHash() => r'0316858e9a89dad85fe0f918ec8f802a163a6a0d';
+String _$postHash() => r'9a1f94f32a7ae49677098eef8aec0d96ba352f0c';
 
 /// See also [post].
 @ProviderFor(post)
