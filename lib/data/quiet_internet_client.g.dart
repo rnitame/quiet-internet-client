@@ -21,7 +21,7 @@ class _QuietInternetClient implements QuietInternetClient {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<PostsResponse>> getPosts({
+  Future<PostsResponse> getPosts({
     required int page,
     required int perPage,
     Sort? sort,
@@ -47,8 +47,8 @@ class _QuietInternetClient implements QuietInternetClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<PostsResponse>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<PostsResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -65,18 +65,17 @@ class _QuietInternetClient implements QuietInternetClient {
               baseUrl,
             ))));
     final value = PostsResponse.fromJson(_result.data!);
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
+    return value;
   }
 
   @override
-  Future<HttpResponse<PostResponse>> getPost({required String slug}) async {
+  Future<PostResponse> getPost({required String slug}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<PostResponse>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<PostResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -93,8 +92,7 @@ class _QuietInternetClient implements QuietInternetClient {
               baseUrl,
             ))));
     final value = PostResponse.fromJson(_result.data!);
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
+    return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
@@ -132,7 +130,7 @@ class _QuietInternetClient implements QuietInternetClient {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dioHash() => r'448cae9df9ccaf43db0135b7999ed5772ba4b6a6';
+String _$dioHash() => r'69869eacc7362a66da10c29d80ba45375369ce49';
 
 /// See also [dio].
 @ProviderFor(dio)
