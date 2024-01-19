@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quick_internet_client/ui/screens/post_detail.dart';
-import 'package:quick_internet_client/ui/screens/posts.dart';
+import 'package:quick_internet_client/router.dart';
 
 void main() async {
   await dotenv.load();
@@ -22,27 +21,15 @@ class MyApp extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-        ),
+        brightness: Brightness.light,
+        colorSchemeSeed: Colors.white,
         useMaterial3: true,
       ),
-      routerConfig: router,
+      routerConfig: GoRouter(
+        initialLocation: const HomeRoute().location,
+        debugLogDiagnostics: true,
+        routes: $appRoutes,
+      ),
     );
   }
 }
-
-final router = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const Posts(),
-    ),
-    GoRoute(
-      path: '/posts/:slug',
-      builder: (context, state) => PostDetail(
-        slug: state.pathParameters['slug'] ?? '',
-      ),
-    ),
-  ],
-);

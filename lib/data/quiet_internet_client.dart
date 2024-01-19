@@ -9,8 +9,6 @@ import 'package:quick_internet_client/model/sort.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../model/post.dart';
-
 part 'quiet_internet_client.g.dart';
 
 @RestApi(baseUrl: 'https://sizu.me/api/')
