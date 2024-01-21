@@ -33,15 +33,23 @@ class PostDetailScreen extends HookConsumerWidget {
                   delegate: SliverChildListDelegate([
                     Text(post.updatedAt.toYYMMDDString()),
                     Text('${post.bodyCharacterCount} 文字'),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Wrap(
+                      spacing: 8,
                       children: post.tags
                           .map(
                             (tag) => Chip(
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              labelPadding:
+                                  const EdgeInsets.symmetric(horizontal: 1),
+                              visualDensity: const VisualDensity(vertical: -4),
                               label: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Icon(Icons.tag),
+                                  const Icon(
+                                    Icons.tag,
+                                    size: 16,
+                                  ),
                                   Text(tag),
                                 ],
                               ),
@@ -50,13 +58,21 @@ class PostDetailScreen extends HookConsumerWidget {
                           .toList(),
                     ),
                     Markdown(
-                      styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
+                      controller: ScrollController(),
                       data: post.bodyMarkdown ?? '',
                       shrinkWrap: true,
                       onTapLink: (text, href, title) {
                         if (href != null) {
                           context.launchUrl(href);
                         }
+                      },
+                      imageBuilder: (uri, title, alt) {
+                        return InkWell(
+                          onTap: () {
+                            showPreviewImage(context, uri);
+                          },
+                          child: Image.network(uri.toString()),
+                        );
                       },
                     ),
                   ]),
@@ -72,6 +88,48 @@ class PostDetailScreen extends HookConsumerWidget {
         },
         loading: () => loading,
       ),
+    );
+  }
+
+  Future<void> showPreviewImage(BuildContext context, Uri uri) {
+    return showDialog(
+      barrierDismissible: true,
+      barrierColor: Colors.black87,
+      context: context,
+      builder: (context) {
+        return Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: InteractiveViewer(
+                    child: Image.network(uri.toString()),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Material(
+                  color: Colors.transparent,
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(
+                      Icons.close,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 }

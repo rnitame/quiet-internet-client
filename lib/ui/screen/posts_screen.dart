@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quick_internet_client/data/quiet_internet_api_error.dart';
 import 'package:quick_internet_client/logger.dart';
+import 'package:quick_internet_client/model/direction.dart';
 import 'package:quick_internet_client/model/post_provider.dart';
+import 'package:quick_internet_client/model/post_visibility.dart';
+import 'package:quick_internet_client/model/sort.dart';
 import 'package:quick_internet_client/router.dart';
 import 'package:quick_internet_client/ui/screen/error_screen.dart';
 import 'package:quick_internet_client/ui/widget/empty.dart';
@@ -16,13 +19,16 @@ class PostsScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final sort = ref.watch(postsFilterSortNotifierProvider);
+    final direction = ref.watch(postsFilterDirectionNotifierProvider);
+    final visibility = ref.watch(postsFilterVisibilityNotifierProvider);
     final state = ref.watch(
       postsProvider.call(
         1,
         20,
-        null,
-        null,
-        null,
+        sort,
+        direction,
+        visibility,
       ),
     );
 
@@ -42,16 +48,44 @@ class PostsScreen extends HookConsumerWidget {
                   pinned: true,
                   delegate: PostsFilterChipsDelegate(
                     height: 40,
-                    chipData: [
-                      'Visibility',
-                      'Direction',
-                      'Sort',
+                    chipStates: [
+                      PostsFilterChipsState(
+                        menuList: Sort.values.map((e) => e.value).toList(),
+                        selectedValue: sort.value,
+                        onPressed: (value) {
+                          final sort = Sort.values.byName(value);
+                          ref
+                              .read(postsFilterSortNotifierProvider.notifier)
+                              .update(sort);
+                        },
+                      ),
+                      PostsFilterChipsState(
+                        menuList: Direction.values.map((e) => e.value).toList(),
+                        selectedValue: direction.value,
+                        onPressed: (value) {
+                          final direction = Direction.values.byName(value);
+                          ref
+                              .read(
+                                postsFilterDirectionNotifierProvider.notifier,
+                              )
+                              .update(direction);
+                        },
+                      ),
+                      PostsFilterChipsState(
+                        menuList:
+                            PostVisibility.values.map((e) => e.value).toList(),
+                        selectedValue: visibility.value,
+                        onPressed: (value) {
+                          final visibility =
+                              PostVisibility.values.byName(value);
+                          ref
+                              .read(
+                                postsFilterVisibilityNotifierProvider.notifier,
+                              )
+                              .update(visibility);
+                        },
+                      ),
                     ],
-                    onChipPressed: (chip) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(chip)),
-                      );
-                    },
                   ),
                 ),
               ),
