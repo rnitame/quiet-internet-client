@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quick_internet_client/extensions/datetime_ext.dart';
+import 'package:quick_internet_client/extension/datetime_ext.dart';
 import 'package:quick_internet_client/model/post.dart';
 
 class PostCard extends ConsumerWidget {

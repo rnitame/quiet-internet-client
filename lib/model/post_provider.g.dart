@@ -6,7 +6,7 @@ part of 'post_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$postsHash() => r'1cc09081b4201e1cf6d8a71b55c9435df868e1b5';
+String _$postsHash() => r'342fea1f680547886e4e71951e81011f46247863';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -42,9 +42,9 @@ class PostsFamily extends Family<AsyncValue<List<Post>>> {
   PostsProvider call(
     int page,
     int perPage,
-    Sort sort,
-    Direction direction,
-    PostVisibility visibility,
+    Sort? sort,
+    Direction? direction,
+    PostVisibility? visibility,
   ) {
     return PostsProvider(
       page,
@@ -89,9 +89,9 @@ class PostsProvider extends AutoDisposeFutureProvider<List<Post>> {
   PostsProvider(
     int page,
     int perPage,
-    Sort sort,
-    Direction direction,
-    PostVisibility visibility,
+    Sort? sort,
+    Direction? direction,
+    PostVisibility? visibility,
   ) : this._internal(
           (ref) => posts(
             ref as PostsRef,
@@ -132,9 +132,9 @@ class PostsProvider extends AutoDisposeFutureProvider<List<Post>> {
 
   final int page;
   final int perPage;
-  final Sort sort;
-  final Direction direction;
-  final PostVisibility visibility;
+  final Sort? sort;
+  final Direction? direction;
+  final PostVisibility? visibility;
 
   @override
   Override overrideWith(
@@ -194,13 +194,13 @@ mixin PostsRef on AutoDisposeFutureProviderRef<List<Post>> {
   int get perPage;
 
   /// The parameter `sort` of this provider.
-  Sort get sort;
+  Sort? get sort;
 
   /// The parameter `direction` of this provider.
-  Direction get direction;
+  Direction? get direction;
 
   /// The parameter `visibility` of this provider.
-  PostVisibility get visibility;
+  PostVisibility? get visibility;
 }
 
 class _PostsProviderElement extends AutoDisposeFutureProviderElement<List<Post>>
@@ -212,14 +212,14 @@ class _PostsProviderElement extends AutoDisposeFutureProviderElement<List<Post>>
   @override
   int get perPage => (origin as PostsProvider).perPage;
   @override
-  Sort get sort => (origin as PostsProvider).sort;
+  Sort? get sort => (origin as PostsProvider).sort;
   @override
-  Direction get direction => (origin as PostsProvider).direction;
+  Direction? get direction => (origin as PostsProvider).direction;
   @override
-  PostVisibility get visibility => (origin as PostsProvider).visibility;
+  PostVisibility? get visibility => (origin as PostsProvider).visibility;
 }
 
-String _$postHash() => r'9a1f94f32a7ae49677098eef8aec0d96ba352f0c';
+String _$postHash() => r'ade10d0b9de4d22f353afe422a2923b5224dfabf';
 
 /// See also [post].
 @ProviderFor(post)
