@@ -42,7 +42,6 @@ Dio dio(DioRef ref) {
     PrettyDioLogger(),
   ];
 
-  dio.options.receiveDataWhenStatusError = false;
   dio.interceptors.addAll(interceptors);
   return dio;
 }
