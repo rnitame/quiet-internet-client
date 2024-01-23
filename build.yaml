@@ -1,9 +1,25 @@
 targets:
   $default:
     builders:
+      freezed:
+        generate_for:
+          include:
+            - lib/**/*.dart
+        options:
+          map: false
+          when: false
+      riverpod_generator:
+        generate_for:
+          include:
+            - lib/**/*.dart
+      go_router_builder:
+        generate_for:
+          include:
+            - lib/router.dart
       json_serializable:
         generate_for:
-          - lib/**/*.dart
+          include:
+            - lib/**/*.dart
         options:
           any_map: false
           checked: true

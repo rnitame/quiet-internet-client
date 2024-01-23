@@ -130,7 +130,7 @@ class _QuietInternetClient implements QuietInternetClient {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dioHash() => r'69869eacc7362a66da10c29d80ba45375369ce49';
+String _$dioHash() => r'448cae9df9ccaf43db0135b7999ed5772ba4b6a6';
 
 /// See also [dio].
 @ProviderFor(dio)
