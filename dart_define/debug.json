@@ -1,0 +1,5 @@
+{
+  "flavor": "debug",
+  "appName": "QuietInternetClient debug",
+  "appIdSuffix": ".debug"
+}
