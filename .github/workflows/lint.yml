@@ -1,0 +1,22 @@
+name: lint
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  test:
+    name: analyze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2.12.0
+        with:
+          channel: 'stable'
+      - name: create .env file
+        shell: bash
+        run: |
+          touch .env
+          echo "API_KEY=\"${{ vars.API_KEY }}\"" >> .env
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: dart fix --dry-run
