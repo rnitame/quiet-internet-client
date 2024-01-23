@@ -39,6 +39,7 @@ class PostsFilterChipsDelegate extends SliverPersistentHeaderDelegate {
             },
             onSelected: onPressed,
             child: Chip(
+              key: ValueKey(index),
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               labelPadding: const EdgeInsets.symmetric(horizontal: 1),
               label: Row(

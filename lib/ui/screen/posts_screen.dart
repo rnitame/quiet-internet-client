@@ -36,6 +36,7 @@ class PostsScreen extends HookConsumerWidget {
       body: state.when(
         data: (posts) {
           return CustomScrollView(
+            key: GlobalKey(),
             slivers: [
               SliverAppBar(
                 toolbarHeight: 60,
@@ -101,6 +102,7 @@ class PostsScreen extends HookConsumerWidget {
                       posts
                           .map(
                             (post) => PostCard(
+                              key: ValueKey(post.slug),
                               post: post,
                               onTap: () {
                                 PostDetailRoute(slug: post.slug)
