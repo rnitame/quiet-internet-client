@@ -5,7 +5,6 @@ class Empty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(rnitame): implement build
-    throw UnimplementedError();
+    return Text("empty");
   }
 }
