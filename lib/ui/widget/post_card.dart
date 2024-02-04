@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:quick_internet_client/extension/datetime_ext.dart';
 import 'package:quick_internet_client/model/post.dart';
 
@@ -20,12 +21,20 @@ class PostCard extends ConsumerWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        child: Column(
-          children: [
-            Text(post.title),
-            Text(post.updatedAt.toYYMMDDString()),
-            Text('${post.bodyCharacterCount} 文字'),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                post.title,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const Gap(8),
+              Text(post.updatedAt.toYYMMDDString()),
+              Text('${post.bodyCharacterCount} 文字'),
+            ],
+          ),
         ),
       ),
     );

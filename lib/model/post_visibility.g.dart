@@ -7,7 +7,7 @@ part of 'post_visibility.dart';
 // **************************************************************************
 
 String _$postsFilterVisibilityNotifierHash() =>
-    r'35377a836b5c0c341922bc7dee8dcb6dc8250d20';
+    r'94e7d5c4b3d676fe6f254377cc1aa4cb49d73d7d';
 
 /// See also [PostsFilterVisibilityNotifier].
 @ProviderFor(PostsFilterVisibilityNotifier)

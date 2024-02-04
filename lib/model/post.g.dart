@@ -46,5 +46,5 @@ Map<String, dynamic> _$$PostImplToJson(_$PostImpl instance) =>
 const _$PostVisibilityEnumMap = {
   PostVisibility.myself: 'MYSELF',
   PostVisibility.anyone: 'ANYONE',
-  PostVisibility.all: '',
+  PostVisibility.all: 'ALL',
 };

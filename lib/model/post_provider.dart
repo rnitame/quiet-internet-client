@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:quick_internet_client/data/quiet_internet_api_error.dart';
 import 'package:quick_internet_client/data/quiet_internet_client.dart';
+import 'package:quick_internet_client/data/response/posts_response.dart';
 import 'package:quick_internet_client/model/direction.dart';
 import 'package:quick_internet_client/model/post.dart';
 import 'package:quick_internet_client/model/post_visibility.dart';
@@ -14,20 +15,30 @@ FutureOr<List<Post>> posts(
   PostsRef ref,
   int page,
   int perPage,
-  Sort? sort,
-  Direction? direction,
-  PostVisibility? visibility,
 ) async {
   final api = ref.watch(quietInternetClientProvider);
+  final sort = ref.watch(postsFilterSortNotifierProvider);
+  final direction = ref.watch(postsFilterDirectionNotifierProvider);
+  final visibility = ref.watch(postsFilterVisibilityNotifierProvider);
 
   try {
-    final response = await api.getPosts(
-      page: page,
-      perPage: perPage,
-      sort: sort,
-      direction: direction,
-      postVisibility: visibility,
-    );
+    PostsResponse response;
+    if (visibility == PostVisibility.all) {
+      response = await api.getPosts(
+        page: page,
+        perPage: perPage,
+        sort: sort,
+        direction: direction,
+      );
+    } else {
+      response = await api.getPosts(
+        page: page,
+        perPage: perPage,
+        sort: sort,
+        direction: direction,
+        postVisibility: visibility,
+      );
+    }
 
     return response.posts;
   } on DioException catch (e) {

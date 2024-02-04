@@ -24,7 +24,7 @@ class PostsFilterSortNotifier extends _$PostsFilterSortNotifier {
     final sort = sharedPreferences.getString(_key);
 
     return Sort.values.firstWhere(
-      (element) => element.name == sort,
+      (element) => element.name.toLowerCase() == sort?.toLowerCase(),
       orElse: () => Sort.created,
     );
   }

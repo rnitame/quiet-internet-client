@@ -32,7 +32,7 @@ class _QuietInternetClient implements QuietInternetClient {
     String? updatedAfter,
     String? updatedBefore,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'perPage': perPage,
@@ -46,7 +46,7 @@ class _QuietInternetClient implements QuietInternetClient {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<PostsResponse>(Options(
       method: 'GET',
@@ -70,10 +70,10 @@ class _QuietInternetClient implements QuietInternetClient {
 
   @override
   Future<PostResponse> getPost({required String slug}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<PostResponse>(Options(
       method: 'GET',
