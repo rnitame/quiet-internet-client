@@ -1,19 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quick_internet_client/data/quiet_internet_api_error.dart';
-import 'package:quick_internet_client/extension/enum_ext.dart';
-import 'package:quick_internet_client/logger.dart';
-import 'package:quick_internet_client/model/direction.dart';
 import 'package:quick_internet_client/model/post_provider.dart';
-import 'package:quick_internet_client/model/post_visibility.dart';
-import 'package:quick_internet_client/model/posts_filter_chips_state.dart';
-import 'package:quick_internet_client/model/sort.dart';
+import 'package:quick_internet_client/model/posts_filter_chip.dart';
 import 'package:quick_internet_client/router.dart';
-import 'package:quick_internet_client/ui/screen/error_screen.dart';
+import 'package:quick_internet_client/ui/widget/empty.dart';
 import 'package:quick_internet_client/ui/widget/loading.dart';
 import 'package:quick_internet_client/ui/widget/post_card.dart';
 import 'package:quick_internet_client/ui/widget/quiet_internet_logo.dart';
+import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 class PostsScreen extends HookConsumerWidget {
   const PostsScreen({super.key});
@@ -26,38 +22,10 @@ class PostsScreen extends HookConsumerWidget {
         20,
       ),
     );
-    final sort = ref.watch(postsFilterSortNotifierProvider);
-    final direction = ref.watch(postsFilterDirectionNotifierProvider);
-    final visibility = ref.watch(postsFilterVisibilityNotifierProvider);
-    final chipStates = [
-      PostsFilterChipsState(
-        menuList: Sort.values.map((e) => e.value).toList(),
-        selectedValue: sort.value,
-        onPressed: (value) {
-          final sort = Sort.values.byNameIgnoreCase(value);
-          ref.read(postsFilterSortNotifierProvider.notifier).update(sort);
-        },
-      ),
-      PostsFilterChipsState(
-        menuList: Direction.values.map((e) => e.value).toList(),
-        selectedValue: direction.value,
-        onPressed: (value) {
-          final direction = Direction.values.byNameIgnoreCase(value);
-          ref
-              .read(postsFilterDirectionNotifierProvider.notifier)
-              .update(direction);
-        },
-      ),
-      PostsFilterChipsState(
-        menuList: PostVisibility.values.map((e) => e.value).toList(),
-        selectedValue: visibility.value,
-        onPressed: (value) {
-          final visibility = PostVisibility.values.byNameIgnoreCase(value);
-          ref
-              .read(postsFilterVisibilityNotifierProvider.notifier)
-              .update(visibility);
-        },
-      ),
+    final chips = [
+      ref.watch(postsFilterSortChipProvider),
+      ref.watch(postsFilterDirectionChipProvider),
+      ref.watch(postsFilterVisibilityChipProvider),
     ];
 
     return Scaffold(
@@ -74,12 +42,12 @@ class PostsScreen extends HookConsumerWidget {
                   height: 40,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
-                    itemCount: chipStates.length,
+                    itemCount: chips.length,
                     itemBuilder: (context, index) {
-                      final state = chipStates[index];
-                      final selectedValue = state.selectedValue;
-                      final menuList = state.menuList;
-                      final onPressed = state.onPressed;
+                      final chip = chips[index];
+                      final selectedValue = chip.selectedValue;
+                      final menuList = chip.menuList;
+                      final onPressed = chip.onPressed;
 
                       return PopupMenuButton<String>(
                         itemBuilder: (BuildContext context) {
@@ -119,32 +87,37 @@ class PostsScreen extends HookConsumerWidget {
               ],
             ),
           ),
+          CupertinoSliverRefreshControl(
+            onRefresh: () async {
+              ref.invalidate(postsProvider);
+            },
+          ),
           SliverPadding(
             padding: const EdgeInsets.all(16),
-            sliver: SliverList(
-              delegate: SliverChildListDelegate(
-                state.when(
-                  data: (posts) {
-                    return posts
-                        .map(
-                          (post) => PostCard(
-                            key: ValueKey(post.slug),
-                            post: post,
-                            onTap: () {
-                              PostDetailRoute(slug: post.slug)
-                                  .push<void>(context);
-                            },
-                          ),
-                        )
-                        .toList();
-                  },
-                  error: (Object error, StackTrace stackTrace) {
-                    logger.e(error.toString());
-                    return [ErrorScreen(error: error as QuietInternetApiError)];
-                  },
-                  loading: () => [loading],
-                ),
-              ),
+            sliver: SliverInfiniteList(
+              itemCount: state.value?.length ?? 0,
+              isLoading: state.isLoading,
+              onFetchData: () {},
+              separatorBuilder: (context, index) => const Gap(8),
+              loadingBuilder: (context) => loading,
+              centerLoading: true,
+              itemBuilder: (context, index) {
+                final posts = state.value;
+
+                if (posts != null) {
+                  final post = posts[index];
+
+                  return PostCard(
+                    key: ValueKey(post.slug),
+                    post: post,
+                    onTap: () {
+                      PostDetailRoute(slug: post.slug).push<void>(context);
+                    },
+                  );
+                } else {
+                  return const Empty();
+                }
+              },
             ),
           ),
         ],
