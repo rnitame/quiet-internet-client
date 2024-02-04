@@ -7,7 +7,7 @@ part of 'direction.dart';
 // **************************************************************************
 
 String _$postsFilterDirectionNotifierHash() =>
-    r'6e25442d7f3399729b79eb3787d33a17a2d5adf1';
+    r'70a1dc26b8abced914ef229cf63f9bf264f4c020';
 
 /// See also [PostsFilterDirectionNotifier].
 @ProviderFor(PostsFilterDirectionNotifier)

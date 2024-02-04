@@ -9,7 +9,7 @@ part 'post_visibility.g.dart';
 enum PostVisibility {
   myself(value: 'MYSELF'),
   anyone(value: 'ANYONE'),
-  all(value: ''),
+  all(value: 'ALL'),
   ;
 
   const PostVisibility({required this.value});
@@ -24,11 +24,11 @@ class PostsFilterVisibilityNotifier extends _$PostsFilterVisibilityNotifier {
   @override
   PostVisibility build() {
     final sharedPreferences = ref.watch(sharedPreferencesProvider);
-    final direction = sharedPreferences.getString(_key);
+    final visibility = sharedPreferences.getString(_key);
 
     return PostVisibility.values.firstWhere(
-      (element) => element.name == direction,
-      orElse: () => PostVisibility.anyone,
+      (element) => element.name.toLowerCase() == visibility?.toLowerCase(),
+      orElse: () => PostVisibility.all,
     );
   }
 

@@ -7,7 +7,7 @@ part of 'sort.dart';
 // **************************************************************************
 
 String _$postsFilterSortNotifierHash() =>
-    r'c7646dd99809b1eabc29ee336268c99dcea18242';
+    r'77812f665cab73b71c0ea9d0d3451e83b0bd0035';
 
 /// See also [PostsFilterSortNotifier].
 @ProviderFor(PostsFilterSortNotifier)

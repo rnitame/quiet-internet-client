@@ -24,7 +24,7 @@ class PostsFilterDirectionNotifier extends _$PostsFilterDirectionNotifier {
     final direction = sharedPreferences.getString(_key);
 
     return Direction.values.firstWhere(
-      (element) => element.name == direction,
+      (element) => element.name.toLowerCase() == direction?.toLowerCase(),
       orElse: () => Direction.desc,
     );
   }

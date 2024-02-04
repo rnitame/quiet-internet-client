@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'posts_filter_chips_delegate.dart';
+part of 'posts_filter_chips_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -122,12 +122,13 @@ class __$$PostsFilterChipsStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PostsFilterChipsStateImpl implements _PostsFilterChipsState {
+class _$PostsFilterChipsStateImpl extends _PostsFilterChipsState {
   _$PostsFilterChipsStateImpl(
       {required final List<String> menuList,
       required this.selectedValue,
       required this.onPressed})
-      : _menuList = menuList;
+      : _menuList = menuList,
+        super._();
 
   final List<String> _menuList;
   @override
@@ -147,22 +148,6 @@ class _$PostsFilterChipsStateImpl implements _PostsFilterChipsState {
     return 'PostsFilterChipsState(menuList: $menuList, selectedValue: $selectedValue, onPressed: $onPressed)';
   }
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PostsFilterChipsStateImpl &&
-            const DeepCollectionEquality().equals(other._menuList, _menuList) &&
-            (identical(other.selectedValue, selectedValue) ||
-                other.selectedValue == selectedValue) &&
-            (identical(other.onPressed, onPressed) ||
-                other.onPressed == onPressed));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_menuList), selectedValue, onPressed);
-
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
@@ -171,12 +156,13 @@ class _$PostsFilterChipsStateImpl implements _PostsFilterChipsState {
           _$PostsFilterChipsStateImpl>(this, _$identity);
 }
 
-abstract class _PostsFilterChipsState implements PostsFilterChipsState {
+abstract class _PostsFilterChipsState extends PostsFilterChipsState {
   factory _PostsFilterChipsState(
           {required final List<String> menuList,
           required final String selectedValue,
           required final void Function(String) onPressed}) =
       _$PostsFilterChipsStateImpl;
+  _PostsFilterChipsState._() : super._();
 
   @override
   List<String> get menuList;
